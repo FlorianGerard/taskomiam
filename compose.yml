@@ -1,0 +1,43 @@
+services:
+  tm_php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: taskomiam_php
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      tm_postgres:
+        condition: service_healthy
+
+  tm_postgres:
+    image: postgres:17
+    container_name: taskomiam_postgres
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: taskomiam
+      POSTGRES_USER: taskomiam
+      POSTGRES_PASSWORD: admin1234
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskomiam -d taskomiam"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    container_name: taskomiam_adminer
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - tm_postgres
+
+volumes:
+  database_data:
