@@ -3,25 +3,33 @@
 namespace App\Command;
 
 use App\Repository\UserRepository;
+use App\Service\UserPassword;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsCommand(
     name: 'app:create-admin',
     description: 'Creates a new admin if no admin exists',
-    usages: ['admin_name <admin_name> email <email> firstname <firstname> lastname <lastname> password <password>']
+    usages: [
+        'app:create-admin',
+        'app:create-admin admin@example.com John Doe',
+    ]
 )]
 class CreateAdminCommand extends Command
 {
-    private UserRepository $user_repo;
 
-    public function __construct(UserRepository $user_repo)
-    {
-        $this->user_repo = $user_repo;
+    public function __construct(
+        private UserRepository $userRepository,
+        private EntityManagerInterface $entityManager,
+        private UserPassword $userPassword,
+        private ValidatorInterface $validator
+    ) {
         parent::__construct();
     }
 
@@ -31,7 +39,6 @@ class CreateAdminCommand extends Command
             ->addArgument('email', InputArgument::OPTIONAL, 'The email of the admin')
             ->addArgument('firstname', InputArgument::OPTIONAL, 'The first name of the admin')
             ->addArgument('lastname', InputArgument::OPTIONAL, 'The last name of the admin')
-            ->setDescription('Creates a new admin if no admin exists')
             ->setHelp('This command allows you to create a new admin if no admin exists.');
     }
 
@@ -40,7 +47,7 @@ class CreateAdminCommand extends Command
         OutputInterface $output
     ): int {
         $io = new SymfonyStyle($input, $output);
-        $admin = $this->user_repo->findAdmin();
+        $admin = $this->userRepository->findAdmin();
 
         if ($admin) {
             $io->warning('An admin already exists.');
@@ -68,12 +75,37 @@ class CreateAdminCommand extends Command
         $user->setEmail($email);
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
-        $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+        $user->setPlainPassword($password);
+        $errors = $this->validator->validate(
+            $user,
+            null,
+            ['Default', 'user_create']
+        );
+
+        if (count($errors) > 0) {
+            foreach ($errors as $error) {
+                $io->error($error->getMessage());
+            }
+
+            return Command::FAILURE;
+        }
+
+        $this->userPassword->hashPassword($user);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setDateAdd($dateImmutable);
 
-        $this->user_repo->getEntityManager()->persist($user);
-        $this->user_repo->getEntityManager()->flush();
+        try {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            $io->error('Failed to create the admin: ' . $e->getMessage());
+            return Command::FAILURE;
+        }
+
+        $io->success(sprintf(
+            'Admin "%s" has been created successfully.',
+            $email
+        ));
 
         // création de l'admin ensuite
         return Command::SUCCESS;
