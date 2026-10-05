@@ -122,11 +122,11 @@ Objectif : seuls les administrateurs peuvent accéder à EasyAdmin.
 
 Objectif : créer le premier véritable objet métier.
 
-- [ ] Définir les propriétés de `Recipe`
-- [ ] Créer l'entité Doctrine
-- [ ] Créer la migration
-- [ ] Exécuter la migration
-- [ ] Vérifier la table en base de données
+- [x] Définir les propriétés de `Recipe`
+- [x] Créer l'entité Doctrine
+- [x] Créer la migration
+- [x] Exécuter la migration
+- [x] Vérifier la table en base de données
 
 Première proposition :
 
