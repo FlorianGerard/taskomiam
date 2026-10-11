@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\IngredientCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -50,5 +51,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-user');
         yield MenuItem::section('Recipes');
         yield MenuItem::linkTo(RecipeCrudController::class, 'Recipes', 'fa fa-utensils');
+        yield MenuItem::linkTo(IngredientCrudController::class, 'Ingredients', 'fa fa-carrot');
     }
 }

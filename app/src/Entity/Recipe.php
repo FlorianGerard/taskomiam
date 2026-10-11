@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Enum\RecipeStatus;
 use App\Repository\RecipeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
@@ -15,33 +19,67 @@ class Recipe
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(
+        message: 'Le nom de la recette doit être renseigné.',
+        normalizer: 'trim',
+    )]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'Le nom de la recette doit faire au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom de la recette ne peut pas dépasser {{ limit }} caractères.',
+        normalizer: 'trim',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotNull(message: 'L\'auteur de la recette doit être renseigné.')]
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $Servings = null;
+    #[Assert\NotNull(message: 'Le nombre de portions doit être renseigné.')]
+    #[Assert\Positive(message: 'Le nombre de portions doit être un nombre positif.')]
+    #[ORM\Column(nullable: false)]
+    private ?int $servings = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
+    #[Assert\NotNull(message: 'Le temps de préparation doit être renseigné.')]
+    #[Assert\PositiveOrZero(message: 'Le temps de préparation doit être 0 ou un nombre positif.')]
+    #[ORM\Column(nullable: false)]
     private ?int $preparation_time = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $cookingTime = null;
+    #[Assert\NotNull(message: 'Le temps de cuisson doit être renseigné.')]
+    #[Assert\PositiveOrZero(message: 'Le temps de cuisson doit être 0 ou un nombre positif.')]
+    #[ORM\Column(nullable: false)]
+    private ?int $cooking_time = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $UpdatedAt = null;
+    private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: RecipeStatus::class)]
-    private array $status = [];
+    #[ORM\Column(enumType: RecipeStatus::class)]
+    private ?RecipeStatus $status = RecipeStatus::PUBLISHED;
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $now = new \DateTimeImmutable();
+
+        $this->created_at = $now;
+        $this->updated_at = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
 
     public function getId(): ?int
     {
@@ -74,12 +112,12 @@ class Recipe
 
     public function getServings(): ?int
     {
-        return $this->Servings;
+        return $this->servings;
     }
 
-    public function setServings(?int $Servings): static
+    public function setServings(?int $servings): static
     {
-        $this->Servings = $Servings;
+        $this->servings = $servings;
 
         return $this;
     }
@@ -110,49 +148,49 @@ class Recipe
 
     public function getCookingTime(): ?int
     {
-        return $this->cookingTime;
+        return $this->cooking_time;
     }
 
-    public function setCookingTime(?int $cookingTime): static
+    public function setCookingTime(?int $cooking_time): static
     {
-        $this->cookingTime = $cookingTime;
+        $this->cooking_time = $cooking_time;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->UpdatedAt;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $UpdatedAt): static
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
-        $this->UpdatedAt = $UpdatedAt;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
 
     /**
-     * @return RecipeStatus[]
+     * @return RecipeStatus|null
      */
-    public function getStatus(): array
+    public function getStatus(): ?RecipeStatus
     {
         return $this->status;
     }
 
-    public function setStatus(array $status): static
+    public function setStatus(?RecipeStatus $status): static
     {
         $this->status = $status;
 

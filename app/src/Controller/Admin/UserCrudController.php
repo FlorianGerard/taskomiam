@@ -61,39 +61,37 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
-            yield TextField::new('firstname'),
-            yield TextField::new('lastname'),
-            yield EmailField::new('email'),
-            yield TextField::new('plainPassword')
-                ->setLabel('Password')
-                ->setFormType(PasswordType::class)
-                ->onlyOnForms(),
-            yield ChoiceField::new('roles')
-                ->setChoices([
-                    'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
-                ])
-                ->allowMultipleChoices()
-                ->renderExpanded(),
-            yield ImageField::new('avatar')
-                ->setBasePath('uploads/files/')
-                ->setUploadDir('public/uploads/files/')
-                ->setRequired(false)
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->onlyOnForms()
-                ->setFileConstraints(
-                    new \Symfony\Component\Validator\Constraints\File(
-                        maxSize: '2M',
-                        mimeTypes: [
-                            'image/jpeg',
-                            'image/png',
-                            'image/gif',
-                        ],
-                        mimeTypesMessage: 'Please upload a valid image file (JPEG, PNG, GIF).',
-                        maxSizeMessage: 'The maximum allowed file size is 2MB.',
-                    )
+        yield TextField::new('firstname');
+        yield TextField::new('lastname');
+        yield EmailField::new('email');
+        yield TextField::new('plainPassword')
+            ->setLabel('Password')
+            ->setFormType(PasswordType::class)
+            ->onlyOnForms();
+        yield ChoiceField::new('roles')
+            ->setChoices([
+                'User' => 'ROLE_USER',
+                'Admin' => 'ROLE_ADMIN',
+            ])
+            ->allowMultipleChoices()
+            ->renderExpanded();
+        yield ImageField::new('avatar')
+            ->setBasePath('uploads/files/')
+            ->setUploadDir('public/uploads/files/')
+            ->setRequired(false)
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->onlyOnForms()
+            ->setFileConstraints(
+                new \Symfony\Component\Validator\Constraints\File(
+                    maxSize: '2M',
+                    mimeTypes: [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ],
+                    mimeTypesMessage: 'Please upload a valid image file (JPEG, PNG, GIF).',
+                    maxSizeMessage: 'The maximum allowed file size is 2MB.',
                 )
-        ];
+            );
     }
 }
