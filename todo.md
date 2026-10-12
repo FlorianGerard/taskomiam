@@ -115,16 +115,16 @@ Le premier périmètre comprend : recettes, ingrédients, listes de courses et l
 - [x] Définir la règle pour les doublons : espaces et casse du nom
 - [x] Créer / exécuter la migration
 - [x] Créer le CRUD EasyAdmin
-- [ ] Ajouter les validations
+- [x] Ajouter les validations
 
 ### Dimanche 11/10 — Vérifications et modèle RecipeIngredient
 
-- [ ] Tester création / modification / suppression d'un ingrédient
-- [ ] Vérifier un doublon selon la règle retenue
-- [ ] Dessiner Recipe → RecipeIngredient → Ingredient
-- [ ] Définir quantity et unit, avec quantités décimales possibles
-- [ ] Décider comment représenter une unité « pièce »
-- [ ] Noter le comportement de suppression attendu
+- [x] Tester création / modification / suppression d'un ingrédient
+- [x] Vérifier un doublon selon la règle retenue
+- [x] Dessiner Recipe → RecipeIngredient → Ingredient
+- [x] Définir quantity et unit, avec quantités décimales possibles
+- [x] Décider comment représenter une unité « pièce »
+- [x] Noter le comportement de suppression attendu
 
 **Jalon :** Recipe est consolidée ; le catalogue Ingredient est utilisable.
 
@@ -132,47 +132,47 @@ Le premier périmètre comprend : recettes, ingrédients, listes de courses et l
 
 ### Lundi — Entité RecipeIngredient
 
-- [ ] Créer id, recipe, ingredient, quantity, unit
-- [ ] ManyToOne vers Recipe et vers Ingredient
-- [ ] OneToMany côté Recipe, avec add / remove cohérents
-- [ ] Choisir un stockage adapté aux quantités décimales
-- [ ] Définir les unités de départ : g, kg, ml, l, pièce
-- [ ] Valider quantité strictement positive et relations obligatoires
+- [x] Créer id, recipe, ingredient, quantity, unit
+- [x] ManyToOne vers Recipe et vers Ingredient
+- [x] OneToMany côté Recipe, avec add / remove cohérents
+- [x] Choisir un stockage adapté aux quantités décimales
+- [x] Définir les unités de départ : g, kg, ml, l, pièce
+- [x] Valider quantité strictement positive et relations obligatoires
 
 ### Mardi — Persistance et suppression
 
-- [ ] Créer / exécuter la migration
-- [ ] Configurer la persistance des lignes avec la recette
-- [ ] Supprimer une ligne retirée de la collection selon la règle retenue
-- [ ] Vérifier que retirer une ligne ne supprime pas l'Ingredient du catalogue
-- [ ] Empêcher la suppression d'un ingrédient utilisé, avec un message compréhensible
+- [x] Créer / exécuter la migration
+- [x] Configurer la persistance des lignes avec la recette
+- [x] Supprimer une ligne retirée de la collection selon la règle retenue
+- [x] Vérifier que retirer une ligne ne supprime pas l'Ingredient du catalogue
+- [x] Empêcher la suppression d'un ingrédient utilisé, avec un message compréhensible
 
 ### Mercredi — FormType d'une ligne
 
-- [ ] Créer RecipeIngredientType
-- [ ] Sélection d'un Ingredient, quantité et unité
-- [ ] Définir la classe de données du formulaire
-- [ ] Vérifier le rendu et les validations d'une ligne
+- [x] Créer RecipeIngredientType
+- [x] Sélection d'un Ingredient, quantité et unité
+- [x] Définir la classe de données du formulaire
+- [x] Vérifier le rendu et les validations d'une ligne
 
 ### Jeudi — Collection dans EasyAdmin
 
-- [ ] Ajouter CollectionField dans RecipeCrudController
-- [ ] Utiliser RecipeIngredientType comme type d'entrée
-- [ ] Permettre ajout / suppression des lignes
-- [ ] Vérifier que les méthodes add / remove de Recipe sont utilisées correctement
+- [x] Ajouter CollectionField dans RecipeCrudController
+- [x] Utiliser RecipeIngredientType comme type d'entrée
+- [x] Permettre ajout / suppression des lignes
+- [x] Vérifier que les méthodes add / remove de Recipe sont utilisées correctement
 
 ### Vendredi — Repos / rattrapage
 
-- [ ] Corriger uniquement les blocages du formulaire imbriqué
+- [x] Corriger uniquement les blocages du formulaire imbriqué
 
 ### Samedi — Scénarios complets
 
-- [ ] Créer une recette avec plusieurs ingrédients
-- [ ] Modifier une quantité et une unité
-- [ ] Ajouter et retirer une ligne sur une recette existante
-- [ ] Vérifier les données après sauvegarde et rechargement
-- [ ] Tester une quantité décimale et une ligne invalide
-- [ ] Vérifier la suppression d'une recette et de ses lignes
+- [x] Créer une recette avec plusieurs ingrédients
+- [x] Modifier une quantité et une unité
+- [x] Ajouter et retirer une ligne sur une recette existante
+- [x] Vérifier les données après sauvegarde et rechargement
+- [x] Tester une quantité décimale et une ligne invalide
+- [x] Vérifier la suppression d'une recette et de ses lignes
 
 ### Dimanche — Fixtures et consolidation
 

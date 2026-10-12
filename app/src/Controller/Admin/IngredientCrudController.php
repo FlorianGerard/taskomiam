@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Ingredient;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -31,6 +32,22 @@ class IngredientCrudController extends AbstractCrudController
                 'true'
             );
     }
+
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+
+        if ($entityInstance instanceof Ingredient && !$entityInstance->getRecipeIngredients()->isEmpty()) {
+            $this->addFlash(
+                'danger',
+                'Impossible de supprimer cet ingrédient. Il est utilisé dans une ou plusieurs recettes.'
+            );
+
+            return;
+        }
+
+        parent::deleteEntity($entityManager, $entityInstance);
+    }
+
 
     public function configureAssets(Assets $assets): Assets
     {

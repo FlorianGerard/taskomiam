@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Enum\RecipeStatus;
@@ -64,6 +66,25 @@ class Recipe
 
     #[ORM\Column(enumType: RecipeStatus::class)]
     private ?RecipeStatus $status = RecipeStatus::PUBLISHED;
+
+    /**
+     * @var Collection<int, RecipeIngredient>
+     */
+    #[Assert\Valid]
+    #[ORM\OneToMany(targetEntity: RecipeIngredient::class, mappedBy: 'recipe', orphanRemoval: true, cascade: ['persist'])]
+    private Collection $recipeIngredients;
+
+    /**
+     * @var Collection<int, Keywords>
+     */
+    #[ORM\ManyToMany(targetEntity: Keywords::class, inversedBy: 'recipe')]
+    private Collection $keywords;
+
+    public function __construct()
+    {
+        $this->recipeIngredients = new ArrayCollection();
+        $this->keywords = new ArrayCollection();
+    }
 
     #[ORM\PrePersist]
     public function onPrePersist(): void
@@ -193,6 +214,63 @@ class Recipe
     public function setStatus(?RecipeStatus $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RecipeIngredient>
+     */
+    public function getRecipeIngredients(): Collection
+    {
+        return $this->recipeIngredients;
+    }
+
+    public function addRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if (!$this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->add($recipeIngredient);
+            $recipeIngredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if ($this->recipeIngredients->removeElement($recipeIngredient)) {
+            // set the owning side to null (unless already changed)
+            if ($recipeIngredient->getRecipe() === $this) {
+                $recipeIngredient->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Keywords>
+     */
+    public function getKeywords(): Collection
+    {
+        return $this->keywords;
+    }
+
+    public function addKeyword(Keywords $keyword): static
+    {
+        if (!$this->keywords->contains($keyword)) {
+            $this->keywords->add($keyword);
+            $keyword->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKeyword(Keywords $keyword): static
+    {
+        if ($this->keywords->removeElement($keyword)) {
+            $keyword->removeRecipe($this);
+        }
 
         return $this;
     }
