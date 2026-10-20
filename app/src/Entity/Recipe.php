@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -80,10 +81,17 @@ class Recipe
     #[ORM\ManyToMany(targetEntity: Keywords::class, inversedBy: 'recipe')]
     private Collection $keywords;
 
+    /**
+     * @var Collection<int, category>
+     */
+    #[ORM\ManyToMany(targetEntity: category::class, inversedBy: 'recipes')]
+    private Collection $category;
+
     public function __construct()
     {
         $this->recipeIngredients = new ArrayCollection();
         $this->keywords = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -271,6 +279,30 @@ class Recipe
         if ($this->keywords->removeElement($keyword)) {
             $keyword->removeRecipe($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, category>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(category $category): static
+    {
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(category $category): static
+    {
+        $this->category->removeElement($category);
 
         return $this;
     }

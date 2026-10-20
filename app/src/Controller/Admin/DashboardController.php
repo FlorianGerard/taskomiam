@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\IngredientCrudController;
 use App\Controller\Admin\RecipeIngredientCrudController;
+use App\Controller\Admin\CategoryCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -13,7 +14,14 @@ use App\Controller\Admin\UserCrudController;
 use App\Controller\Admin\RecipeCrudController;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+#[AdminDashboard(
+    routePath: '/admin/{_locale}',
+    routeName: 'admin',
+    routeOptions: [
+        'requirements' => ['_locale' => 'fr|en'],
+        'defaults' => ['_locale' => 'fr'],
+    ]
+)]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
@@ -42,17 +50,19 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('<h1>Taskomiam</h1>')
             ->setDefaultColorScheme('dark')
-            ->setTheme(Theme::new());
+            ->setTheme(Theme::new())
+            ->setTranslationDomain('admin')
+            ->setLocales(['fr', 'en']);
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('dashboard', 'fa fa-home');
         yield MenuItem::section('Users');
-        yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-user');
+        yield MenuItem::linkTo(UserCrudController::class, 'Utilisateurs', 'fa fa-user');
         yield MenuItem::section('Recipes');
-        yield MenuItem::linkTo(RecipeCrudController::class, 'Recipes', 'fa fa-utensils');
-        yield MenuItem::linkTo(IngredientCrudController::class, 'Ingredients', 'fa fa-carrot');
-        yield MenuItem::linkTo(RecipeIngredientCrudController::class, 'Recipe Ingredients', 'fa fa-carrot');
+        yield MenuItem::linkTo(RecipeCrudController::class, 'Recettes', 'fa fa-utensils');
+        yield MenuItem::linkTo(IngredientCrudController::class, 'Ingrédients', 'fa fa-carrot');
+        yield MenuItem::linkTo(CategoryCrudController::class, 'Catégories', 'fa fa-folder');
     }
 }

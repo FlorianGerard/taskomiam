@@ -1,0 +1,46 @@
+dashboard: Tableau de bord
+user:
+    title: Utilisateur
+    title.plural: Utilisateurs
+    firstname: Prénom de l'utilisateur
+    lastname: Nom de l'utilisateur
+    email: Email de l'utilisateur
+    password: Mot de passe de l'utilisateur
+    role:
+        user: Utilisateur
+        admin: Administrateur
+        role: Rôle
+recipe:
+    title: Recette
+    title.plural: Recettes
+    name: Nom de la recette
+    description: Description de la recette
+    servings: Portions
+    preparation_time: Temps de préparation
+    cooking_time: Temps de cuisson
+    author: Auteur de la recette
+    choose_author: Choisir un auteur
+    status: Statut
+    ingredients: Ingrédients
+    category: Catégorie de la recette
+    choose_category: Choisir une catégorie
+ingredient:
+    title: Ingrédient
+    title.plural: Ingrédients
+    name: Nom de l'ingrédient
+    quantity: Quantité de l'ingrédient
+    unit: Unité de l'ingrédient
+category:
+    title: Catégorie
+    title.plural: Catégories
+    name: Nom de la catégorie
+    description: Description de la catégorie
+unit:
+    gram: Gramme
+    liter: Litre
+    milliliter: Millilitre
+    kilogram: Kilogramme
+    piece: Pièce
+    teaspoon: Cuillère à café
+    tablespoon: Cuillère à soupe
+    pinch: Pincée

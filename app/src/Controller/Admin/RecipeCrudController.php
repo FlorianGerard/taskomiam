@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\RecipeIngredientCrudController;
 use App\Entity\Recipe;
 use App\Enum\RecipeStatus;
+use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -23,28 +24,34 @@ class RecipeCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setFormOptions(
-            [
-                'validation_groups' => ['Default'],
-            ]
-        );
+        return $crud
+            ->setEntityLabelInSingular('recipe.title')
+            ->setEntityLabelInPlural('recipe.title.plural')
+            ->setFormOptions(
+                [
+                    'validation_groups' => ['Default'],
+                ]
+            );
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name');
-        yield TextEditorField::new('description');
-        yield IntegerField::new('servings');
-        yield IntegerField::new('preparation_time');
-        yield IntegerField::new('cooking_time');
-        yield AssociationField::new('author', 'Auteur')
-            ->setFormTypeOption('placeholder', 'Choisir un auteur');
+        yield TextField::new('name', 'recipe.name');
+        yield TextEditorField::new('description', 'recipe.description');
+        yield IntegerField::new('servings', 'recipe.servings');
+        yield IntegerField::new('preparation_time', 'recipe.preparation_time');
+        yield IntegerField::new('cooking_time', 'recipe.cooking_time');
+        yield AssociationField::new('author', 'recipe.author')
+            ->setFormTypeOption('placeholder', 'recipe.choose_author');
 
-        yield ChoiceField::new('status')
+        yield ChoiceField::new('status', 'recipe.status')
             ->setChoices(RecipeStatus::cases())->autocomplete();
 
+        yield AssociationField::new('category', 'recipe.category')
+            ->setFormTypeOption('placeholder', 'recipe.choose_category');
+
         yield CollectionField::new('recipeIngredients')
-            ->setLabel('Ingrédients')
+            ->setLabel('recipe.ingredients')
             ->setEntryToStringMethod('__toString')
             ->useEntryCrudForm(RecipeIngredientCrudController::class)
             ->allowAdd()

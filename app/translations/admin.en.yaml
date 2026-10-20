@@ -1,0 +1,44 @@
+dashboard: Dashboard
+user:
+    title: User
+    title.plural: Users
+    firstname: User's first name
+    lastname: User's last name
+    email: User's email
+    password: User's password
+    role:
+        user: User
+        admin: Administrator
+        role: Role
+recipe:
+    title: Recipe
+    title.plural: Recipes
+    name: Recipe name
+    description: Recipe description
+    servings: Servings
+    preparation_time: Preparation time
+    cooking_time: Cooking time
+    author: Recipe author
+    choose_author: Select an author
+    status: Status
+    ingredients: Ingredients
+ingredient:
+    title: Ingredient
+    title.plural: Ingredients
+    name: Ingredient name
+    quantity: Ingredient quantity
+    unit: Ingredient unit
+category:
+    title: Category
+    title.plural: Categories
+    name: Category name
+    description: Category description
+unit:
+    gram: Gram
+    liter: Liter
+    milliliter: Milliliter
+    kilogram: Kilogram
+    piece: Piece
+    teaspoon: Teaspoon
+    tablespoon: Tablespoon
+    pinch: Pinch

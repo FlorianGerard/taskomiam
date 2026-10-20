@@ -21,12 +21,14 @@ class IngredientCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular('ingredient.title')
+            ->setEntityLabelInPlural('ingredient.title.plural')
             ->addFormTheme('admin/form/ingredient_suggestions.html.twig');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name', 'Nom')
+        yield TextField::new('name', 'ingredient.name')
             ->setFormTypeOption(
                 'attr.data-ingredient-search',
                 'true'

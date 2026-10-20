@@ -32,21 +32,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[Assert\Length(min: 10, minMessage: 'Le mot de passe doit faire au moins 10 caractères.')]
+    #[Assert\Length(min: 10, minMessage: 'validators.length10')]
     #[Assert\Regex(
         pattern: '/[A-Z]/',
-        message: 'Le mot de passe doit contenir au moins une majuscule.'
+        message: 'validators.password.uppercase'
     )]
     #[Assert\Regex(
         pattern: '/[^a-zA-Z0-9]/',
-        message: 'Le mot de passe doit contenir au moins un caractère spécial.'
+        message: 'validators.password.special'
     )]
     #[Assert\Regex(
         pattern: '/\s/',
         match: false,
-        message: 'Le mot de passe ne peut pas contenir d’espace.'
+        message: 'validators.password.no_space'
     )]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe.', groups: ['user_create'])]
+    #[Assert\NotBlank(message: 'validators.not_blank', groups: ['user_create'])]
     private ?string $plainPassword = null;
 
     /**

@@ -20,10 +20,13 @@ class RecipeIngredientCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-        yield AssociationField::new('ingredient', 'Ingrédient')
-            ->autocomplete();
-        yield NumberField::new('quantity');
-        yield ChoiceField::new('unit')
-            ->setChoices(Unit::cases())->autocomplete();
+        yield AssociationField::new('ingredient', 'ingredient.name')
+            ->autocomplete()
+            ->setColumns('col-md-12 col-xxl-10');
+        yield NumberField::new('quantity', 'ingredient.quantity')->setColumns('col-md-12 col-xxl-10');
+        yield ChoiceField::new('unit', 'ingredient.unit')
+            ->setChoices(Unit::cases())
+            ->autocomplete()
+            ->setColumns('col-md-12 col-xxl-10');
     }
 }

@@ -1,0 +1,9 @@
+validators:
+    not_blank: "Ce champ ne peut pas être vide."
+    length10: "La longueur de ce champ doit faire au moins 10 caractères."
+    length5: "La longueur de ce champ doit faire au moins 5 caractères."
+    password:
+        length10: "Le mot de passe doit faire au moins 10 caractères."
+        uppercase: "Le mot de passe doit contenir au moins une majuscule."
+        special: "Le mot de passe doit contenir au moins un caractère spécial."
+        no_space: "Le mot de passe ne peut pas contenir d’espace."

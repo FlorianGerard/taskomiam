@@ -49,29 +49,32 @@ class UserCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setFormOptions(
-            [
-                'validation_groups' => ['Default', 'user_create'],
-            ],
-            [
-                'validation_groups' => ['Default'],
-            ]
-        );
+        return $crud
+            ->setEntityLabelInSingular('user.title')
+            ->setEntityLabelInPlural('user.title.plural')
+            ->setFormOptions(
+                [
+                    'validation_groups' => ['Default', 'user_create'],
+                ],
+                [
+                    'validation_groups' => ['Default'],
+                ]
+            );
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('firstname');
-        yield TextField::new('lastname');
-        yield EmailField::new('email');
+        yield TextField::new('firstname', 'user.firstname');
+        yield TextField::new('lastname', 'user.lastname');
+        yield EmailField::new('email', 'user.email');
         yield TextField::new('plainPassword')
-            ->setLabel('Password')
+            ->setLabel('user.password')
             ->setFormType(PasswordType::class)
             ->onlyOnForms();
         yield ChoiceField::new('roles')
-            ->setChoices([
-                'User' => 'ROLE_USER',
-                'Admin' => 'ROLE_ADMIN',
+            ->setTranslatableChoices([
+                'ROLE_USER' => 'user.role.user',
+                'ROLE_ADMIN' => 'user.role.admin',
             ])
             ->allowMultipleChoices()
             ->renderExpanded();
