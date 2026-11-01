@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\KeywordsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,6 +17,17 @@ class Keywords
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(
+        message: 'Le nom du mot-clé doit être renseigné.',
+        normalizer: 'trim',
+    )]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'Le nom du mot-clé doit faire au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom du mot-clé ne peut pas dépasser {{ limit }} caractères.',
+        normalizer: 'trim',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -71,5 +84,10 @@ class Keywords
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
     }
 }

@@ -9,6 +9,7 @@ services:
       - ./app:/app
     ports:
       - "127.0.0.1:8000:8000"
+    restart: unless-stopped
     depends_on:
       tm_postgres:
         condition: service_healthy
@@ -30,6 +31,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 30s
 
   adminer:
     image: adminer

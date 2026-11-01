@@ -52,7 +52,8 @@ class Category
 
         return $this;
     }
-    #[Assert\NotBlank(message: 'validators.not_blank')]
+
+    #[Assert\Length(min: 5, minMessage: 'validators.length5')]
     public function getDescription(): ?string
     {
         return $this->description;

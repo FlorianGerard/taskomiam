@@ -66,7 +66,7 @@ class Recipe
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\Column(enumType: RecipeStatus::class)]
-    private ?RecipeStatus $status = RecipeStatus::PUBLISHED;
+    private ?RecipeStatus $status = RecipeStatus::PRIVATE;
 
     /**
      * @var Collection<int, RecipeIngredient>

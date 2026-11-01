@@ -49,6 +49,8 @@ class RecipeCrudController extends AbstractCrudController
 
         yield AssociationField::new('category', 'recipe.category')
             ->setFormTypeOption('placeholder', 'recipe.choose_category');
+        yield AssociationField::new('keywords', 'recipe.keywords')
+            ->setFormTypeOption('placeholder', 'recipe.choose_keywords');
 
         yield CollectionField::new('recipeIngredients')
             ->setLabel('recipe.ingredients')

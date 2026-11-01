@@ -1,0 +1,11 @@
+reference,name,description
+CAT001,Entrées,Recettes servies en début de repas
+CAT002,Plats principaux,Recettes constituant le plat principal
+CAT003,Desserts,Préparations sucrées servies en fin de repas
+CAT004,Apéritifs,Petites préparations à partager avant le repas
+CAT005,Soupes et potages,Soupes chaudes ou froides et potages
+CAT006,Salades,Salades composées et préparations froides
+CAT007,Accompagnements,Préparations servies avec un plat principal
+CAT008,Petit-déjeuner,Recettes adaptées au premier repas de la journée
+CAT009,Collations,Petites préparations pour une pause gourmande
+CAT010,Boissons,Boissons chaudes ou froides faites maison

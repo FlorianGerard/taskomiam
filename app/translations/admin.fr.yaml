@@ -24,6 +24,8 @@ recipe:
     ingredients: Ingrédients
     category: Catégorie de la recette
     choose_category: Choisir une catégorie
+    keywords: Mots-clés
+    choose_keywords: Choisir des mots-clés
 ingredient:
     title: Ingrédient
     title.plural: Ingrédients

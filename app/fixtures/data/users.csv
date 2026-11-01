@@ -1,0 +1,2 @@
+reference,email,firstname,lastname,roles
+USER001,camille.martin@example.com,Camille,Martin,ROLE_USER

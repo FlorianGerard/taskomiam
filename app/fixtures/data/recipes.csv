@@ -1,0 +1,11 @@
+reference,name,author_ref,servings,description,preparation_time,cooking_time,categories,recipe_keywords
+R001,Crêpes maison,USER001,4,Crêpes classiques pour le petit-déjeuner ou le dessert.,10,20,CAT003|CAT008,K002|K003|K010
+R002,Omelette aux tomates,USER001,2,Omelette moelleuse agrémentée de tomates et de poivre.,10,8,CAT002,K001|K002|K007
+R003,Soupe de tomates à l’ail,USER001,4,"Soupe de tomates, oignons et ail, à servir bien chaude.",15,30,CAT005|CAT001,K004|K005|K006|K007
+R004,Biscuits sablés au beurre,USER001,6,Biscuits maison croustillants à base de farine et de beurre.,15,15,CAT003|CAT009,K002|K003|K010
+R005,Salade de tomates et oignons,USER001,2,Salade fraîche assaisonnée de sel et de poivre.,10,0,CAT006|CAT001,K001|K004|K005|K006
+R006,Sauce tomate à l’ail,USER001,4,"Sauce tomate mijotée, idéale pour accompagner un plat.",10,25,CAT007,K004|K005|K006|K008
+R007,Pancakes moelleux,USER001,4,Petits pancakes à servir chauds au petit-déjeuner.,10,15,CAT008|CAT003,K002|K003|K010
+R008,Tomates rôties à l’ail,USER001,3,"Tomates au four relevées d’ail, de sel et de poivre.",10,25,CAT007|CAT002,K002|K004|K005|K006
+R009,Œufs brouillés au beurre,USER001,2,Œufs brouillés préparés doucement avec du beurre.,5,5,CAT008|CAT002,K001|K002|K006
+R010,Petits gâteaux au sucre,USER001,6,Petits gâteaux simples et légèrement dorés.,15,20,CAT003|CAT009,K002|K003|K010

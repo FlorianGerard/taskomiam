@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\IngredientCrudController;
 use App\Controller\Admin\RecipeIngredientCrudController;
 use App\Controller\Admin\CategoryCrudController;
+use App\Controller\Admin\KeywordsCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -58,11 +59,15 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('dashboard', 'fa fa-home');
+
         yield MenuItem::section('Users');
         yield MenuItem::linkTo(UserCrudController::class, 'Utilisateurs', 'fa fa-user');
         yield MenuItem::section('Recipes');
         yield MenuItem::linkTo(RecipeCrudController::class, 'Recettes', 'fa fa-utensils');
         yield MenuItem::linkTo(IngredientCrudController::class, 'Ingrédients', 'fa fa-carrot');
         yield MenuItem::linkTo(CategoryCrudController::class, 'Catégories', 'fa fa-folder');
+        yield MenuItem::submenu('Paramètres (Recettes et listes)')->setSubItems([
+            MenuItem::linkTo(KeywordsCrudController::class, 'Mots-clés', 'fa fa-key'),
+        ]);
     }
 }
