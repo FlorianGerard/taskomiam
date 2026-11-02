@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Dto;
+namespace App\Api\Dto\Category;
 
 use App\Entity\Category;
 use Symfony\Component\ObjectMapper\Attribute\Map;

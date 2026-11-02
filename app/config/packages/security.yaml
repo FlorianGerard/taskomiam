@@ -41,10 +41,22 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api_docs:
+            pattern: ^/api/docs
+            stateless: false
+            lazy: true
+            context: shared
+        api_users:
+            pattern: ^/api/users/[0-9]+$
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
         api:
             pattern: ^/api
             stateless: true
+            provider: app_user_provider
             jwt: ~
+
                 
 
 
@@ -52,12 +64,17 @@ security:
         # AdminLogin routes
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        # Api Routes
+        - { path: ^/api/docs, methods: [GET], roles: ROLE_ADMIN }
+        # API user  routes
+        - { path: ^/api/users$, methods: [POST], roles: PUBLIC_ACCESS }
+        - { path: ^/api/users/[0-9]+$, methods: [PATCH], roles: ROLE_USER }
         # API login route
-        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login_check$, methods: [POST], roles: PUBLIC_ACCESS }
         # API recipes routes
         - { path: ^/api/recipes$, methods: [GET], roles: PUBLIC_ACCESS }
-        - { path: ^/api/recipes$, methods: [POST], roles: ROLE_USER }
-        - { path: ^/api/recipes/[0-9]+$, methods: [PUT,DELETE], roles: ROLE_USER }
+        # - { path: ^/api/recipes$, methods: [POST], roles: ROLE_USER }
+        # - { path: ^/api/recipes/[0-9]+$, methods: [PUT,DELETE], roles: ROLE_USER }
 
 when@test:
     security:

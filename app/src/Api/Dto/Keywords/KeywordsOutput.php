@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Dto;
+namespace App\Api\Dto\Keywords;
 
 use App\Entity\Keywords;
 use Symfony\Component\ObjectMapper\Attribute\Map;

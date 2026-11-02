@@ -70,7 +70,8 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('plainPassword')
             ->setLabel('user.password')
             ->setFormType(PasswordType::class)
-            ->onlyOnForms();
+            ->onlyOnForms()
+            ->setRequired(true);
         yield ChoiceField::new('roles')
             ->setTranslatableChoices([
                 'ROLE_USER' => 'user.role.user',

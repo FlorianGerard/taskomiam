@@ -23,6 +23,7 @@
         "symfony/expression-language": "8.1.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "8.1.*",
+        "symfony/monolog-bundle": "^4.1",
         "symfony/object-mapper": "^7.4",
         "symfony/property-access": "8.1.*",
         "symfony/property-info": "8.1.*",
@@ -87,6 +88,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.3",
+        "symfony/debug-bundle": "8.1.*",
         "symfony/maker-bundle": "^1.68"
     }
 }

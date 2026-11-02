@@ -31,7 +31,7 @@ services:
     App\Api\Mapper\EntityTransformer:
         arguments:
             $dtoMap:
-                'App\Entity\Category': 'App\Api\Dto\CategoryOutput'
-                'App\Entity\Ingredient': 'App\Api\Dto\IngredientOutput'
-                'App\Entity\RecipeIngredient': 'App\Api\Dto\RecipeIngredientOutput'
-                'App\Entity\Keywords': 'App\Api\Dto\KeywordsOutput'
+                'App\Entity\Category': 'App\Api\Dto\Category\CategoryOutput'
+                'App\Entity\RecipeIngredient': 'App\Api\Dto\Recipe\RecipeIngredientOutput'
+                'App\Entity\Keywords': 'App\Api\Dto\Keywords\KeywordsOutput'
+                'App\Entity\User': 'App\Api\Dto\User\UserRecipeOutput'

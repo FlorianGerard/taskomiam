@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Api\Dto;
+namespace App\Api\Dto\Recipe;
 
 use App\Entity\RecipeIngredient;
 use App\Enum\Unit;
 use App\Entity\Ingredient;
 use Symfony\Component\ObjectMapper\Attribute\Map;
-
 
 #[Map(source: RecipeIngredient::class)]
 final class RecipeIngredientOutput
